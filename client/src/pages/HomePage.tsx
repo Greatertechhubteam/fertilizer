@@ -26,7 +26,7 @@ const HomePage = () => {
     {
       icon: <Truck />,
       title: "Fast Delivery",
-      description: "Quick and reliable delivery to your doorstep across all regions"
+      description: "Quick and reliable delivery to your door step across all regions"
     },
     {
       icon: <Users />,
