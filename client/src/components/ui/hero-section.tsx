@@ -1,91 +1,70 @@
-import { ReactNode } from "react";
-import { motion } from "framer-motion";
-
-interface HeroSectionProps {
-  title: string;
-  subtitle?: string;
-  description?: string;
-  backgroundImage?: string;
-  children?: ReactNode;
-  height?: "sm" | "md" | "lg" | "xl";
-}
+import React from "react";
+import { cn } from "@/lib/utils";
 
 const HeroSection = ({
   title,
   subtitle,
   description,
   backgroundImage,
-  children,
-  height = "lg"
-}: HeroSectionProps) => {
-  const heightClasses = {
+  backgroundVideo,
+  backgroundType = "image",
+  height = "md",
+  children
+}: {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  backgroundImage?: string;
+  backgroundVideo?: string;
+  backgroundType?: "image" | "video";
+  height?: "sm" | "md" | "lg" | "xl";
+  children?: React.ReactNode;
+}) => {
+  const heightClass = {
     sm: "h-64",
     md: "h-96",
-    lg: "h-[70vh]",
+    lg: "h-[32rem]",
     xl: "h-screen"
-  };
+  }[height];
 
   return (
-    <section className={`relative ${heightClasses[height]} flex items-center justify-center overflow-hidden`}>
-      {/* Background Image */}
-      {backgroundImage && (
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={backgroundImage} 
-            alt="Background" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"></div>
-        </div>
-      )}
-      
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <section className={cn("relative overflow-hidden flex items-center", heightClass)}>
+      {/* Background Video */}
+      {backgroundType === "video" && backgroundVideo && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
         >
-          {subtitle && (
-            <motion.p 
-              className="text-primary-light font-semibold text-lg mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              {subtitle}
-            </motion.p>
-          )}
-          <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight text-shadow"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            {title}
-          </motion.h1>
-          {description && (
-            <motion.p 
-              className="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              {description}
-            </motion.p>
-          )}
-          {children && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              {children}
-            </motion.div>
-          )}
-        </motion.div>
-      </div>
+          <source src={backgroundVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      )}
+
+      {/* Background Image Fallback */}
+      {backgroundType === "image" && backgroundImage && (
+        <img
+          src={backgroundImage}
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+      )}
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-40 z-10" />
+
+    {/* Content */}
+{/* Content */}
+<div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-4 text-center pt-24">
+  <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+  {subtitle && <h2 className="text-2xl md:text-3xl font-semibold mb-2">{subtitle}</h2>}
+  {description && <p className="text-lg md:text-xl mb-6">{description}</p>}
+  {children}
+</div>
+
+
     </section>
   );
 };
