@@ -30,18 +30,51 @@ const SupportPage = () => {
     message: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Support Ticket Submitted!",
-      description: "We'll respond to your inquiry within 24 hours.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      category: "",
-      message: ""
-    });
+
+    // Prepare form data for Web3Forms
+    const formDataToSend = new FormData();
+    formDataToSend.append("access_key", "c9f5b0e1-9616-4384-85d9-674f91927bd6");
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("message", formData.message);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Support Ticket Submitted!",
+          description: "We'll respond to your inquiry within 24 hours.",
+        });
+        // Reset form state after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          category: "",
+          message: ""
+        });
+      } else {
+        toast({
+          title: "Submission Failed",
+          description: "Something went wrong. Please try again later.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while submitting the form. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {

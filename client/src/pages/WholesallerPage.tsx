@@ -7,8 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast"; // Assuming this is your custom hook for shadcn/ui toast
-import HeroSection from "@/components/ui/hero-section"; // Assuming this is your custom Hero component
+import { useToast } from "@/hooks/use-toast";
+import HeroSection from "@/components/ui/hero-section";
 import { 
   CheckCircle, 
   Users, 
@@ -25,7 +25,7 @@ import {
   Building,
   Info
 } from "lucide-react";
-import { cn } from "@/lib/utils"; // Assumes you have a utility for classnames
+import { cn } from "@/lib/utils";
 
 const WholesallerPage = () => {
   const { toast } = useToast();
@@ -41,7 +41,7 @@ const WholesallerPage = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.agreeToTerms) {
       toast({
@@ -51,16 +51,55 @@ const WholesallerPage = () => {
       });
       return;
     }
-    toast({
-      title: "Application Submitted!",
-      description: "We'll review your application and be in touch within 48 hours.",
-    });
-    // Reset form state after successful submission
-    setFormData({
-      businessName: "", contactPerson: "", email: "", phone: "", address: "",
-      gstNumber: "", businessType: "", monthlyVolume: "", productsOfInterest: [],
-      comments: "", agreeToTerms: false
-    });
+
+    // Prepare form data for Web3Forms
+    const formDataToSend = new FormData();
+    formDataToSend.append("access_key", "c9f5b0e1-9616-4384-85d9-674f91927bd6");
+    formDataToSend.append("businessName", formData.businessName);
+    formDataToSend.append("contactPerson", formData.contactPerson);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("phone", formData.phone);
+    formDataToSend.append("address", formData.address);
+    formDataToSend.append("gstNumber", formData.gstNumber);
+    formDataToSend.append("businessType", formData.businessType);
+    formDataToSend.append("monthlyVolume", formData.monthlyVolume);
+    formDataToSend.append("productsOfInterest", formData.productsOfInterest.join(", "));
+    formDataToSend.append("comments", formData.comments);
+    formDataToSend.append("agreeToTerms", formData.agreeToTerms.toString());
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Application Submitted!",
+          description: "We'll review your application and be in touch within 48 hours.",
+        });
+        // Reset form state after successful submission
+        setFormData({
+          businessName: "", contactPerson: "", email: "", phone: "", address: "",
+          gstNumber: "", businessType: "", monthlyVolume: "", productsOfInterest: [],
+          comments: "", agreeToTerms: false
+        });
+      } else {
+        toast({
+          title: "Submission Failed",
+          description: "Something went wrong. Please try again later.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while submitting the form. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
