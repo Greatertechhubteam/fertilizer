@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import HeroSection from "@/components/ui/hero-section";
 import ProductCard from "@/components/ui/product-card";
@@ -13,94 +12,151 @@ const ProductsPage = () => {
 
   const categories = [
     { id: "all", name: "All Products" },
-    { id: "fertilizers", name: "Fertilizers" },
     { id: "chemicals", name: "Chemicals" },
     { id: "seeds", name: "Seeds" },
     { id: "equipment", name: "Equipment" },
     { id: "organic", name: "Organic" },
   ];
 
-  const products = [
-    {
-      name: "Soil Power",
-      image: "/products/P1.svg",
-      category: "fertilizers",
-      description: "Balanced fertilizer for all crop stages.",
-      price: "$20",
-      tags: ["fertilizer", "npk", "complex"],
-    },
-    {
-      name: "MahaBalwan",
-      image: "/products/P2.svg",
-      category: "organic",
-      description: "Eco-friendly compost for soil enrichment.",
-      price: "$15",
-      tags: ["organic", "vermicompost"],
-    },
-    {
-      name: "MahaBalwan Aloo Special",
-      image: "/products/P3.svg",
-      category: "chemicals",
-      description: "Effective pesticide for insect control.",
-      price: "$30",
-      tags: ["pesticide", "chlorpyrifos"],
-    },
-    {
-      name: "Ferrate Sulphate",
-      image: "/products/P4.svg",
-      category: "seeds",
-      description: "High-yield hybrid tomato seeds.",
-      price: "$10",
-      tags: ["seeds", "tomato", "hybrid"],
-    },
-    {
-      name: "Urea 46% N",
-      image: "/products/urea.jpg",
-      category: "fertilizers",
-      description: "Nitrogen-rich fertilizer for fast growth.",
-      price: "$25",
-      tags: ["urea", "nitrogen", "fertilizer"],
-    },
-    {
-      name: "Power Sprayer",
-      image: "/products/sprayer.jpg",
-      category: "equipment",
-      description: "Efficient equipment for spraying crops.",
-      price: "$120",
-      tags: ["equipment", "sprayer"],
-    },
-    {
-      name: "Glyphosate 41% SL",
-      image: "/products/glyphosate.jpg",
-      category: "chemicals",
-      description: "Non-selective herbicide for weed control.",
-      price: "$35",
-      tags: ["glyphosate", "herbicide"],
-    },
-    {
-      name: "DAP Fertilizer",
-      image: "/products/dap.jpg",
-      category: "fertilizers",
-      description: "Phosphorus and nitrogen rich fertilizer.",
-      price: "$22",
-      tags: ["dap", "fertilizer"],
-    },
-    {
-      name: "Organic Neem Cake",
-      image: "/products/neem-cake.jpg",
-      category: "organic",
-      description: "Natural fertilizer and pest repellent.",
-      price: "$18",
-      tags: ["neem", "organic", "cake"],
-    },
-  ];
+const products = [
+  {
+    name: "American Wonder",
+    image: "/products/American.png",
+    category: "fertilizers",
+    tags: ["fertilizer", "npk", "complex"],
+    description: "Premium NPK complex fertilizer for enhanced crop growth and yield.",
+  },
+  {
+    name: "Cal-Star",
+    image: "/products/Calstar2.png",
+    category: "organic",
+    price: "$15",
+    tags: ["organic", "vermicompost"],
+    description: "Nutrient-rich organic vermicompost to improve soil fertility and structure.",
+  },
+  {
+    name: "Ferric Gold",
+    image: "/products/Ferric.png",
+    category: "chemicals",
+    price: "$30",
+    tags: ["pesticide", "chlorpyrifos"],
+    description: "Highly effective chlorpyrifos-based pesticide for pest control.",
+  },
+  {
+    name: "Ferrous Sulphate",
+    image: "/products/Ferrous.png",
+    category: "seeds",
+    price: "$10",
+    tags: ["seeds", "tomato", "hybrid"],
+    description: "High-yield hybrid tomato seeds enriched with ferrous nutrients.",
+  },
+  {
+    name: "Humic Fast",
+    image: "/products/Humic.png",
+    category: "fertilizers",
+    price: "$25",
+    tags: ["urea", "nitrogen", "fertilizer"],
+    description: "Fast-acting humic acid fertilizer that boosts nutrient absorption.",
+  },
+  {
+    name: "Mahabalwan",
+    image: "/products/Maha.png",
+    category: "equipment",
+    price: "$120",
+    tags: ["equipment", "sprayer"],
+    description: "Durable and efficient agricultural sprayer ideal for field operations.",
+  },
+  {
+    name: "Mahabalwan Aloo Special",
+    image: "/products/MahaBalwan.png",
+    category: "chemicals",
+    price: "$35",
+    tags: ["glyphosate", "herbicide"],
+    description: "Glyphosate-based herbicide specially formulated for potato crops.",
+  },
+  {
+    name: "Soil Power",
+    image: "/products/Soil.png",
+    category: "fertilizers",
+    price: "$22",
+    tags: ["dap", "fertilizer"],
+    description: "Balanced DAP fertilizer that strengthens soil productivity.",
+  },
+  {
+    name: "Start Up",
+    image: "/products/Start.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Organic neem cake fertilizer ideal for boosting soil microbes.",
+  },
+  {
+    name: "Sumo Gold",
+    image: "/products/Sumo.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Powerful neem-based organic fertilizer to improve plant immunity.",
+  },
+  {
+    name: "Super King",
+    image: "/products/Super.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Neem-rich organic solution to support healthy plant development.",
+  },
+  {
+    name: "Tejas Power",
+    image: "/products/Tejas.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Organic nutrient booster designed to energize soil and roots.",
+  },
+  {
+    name: "Vardan",
+    image: "/products/Vardan.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Natural neem fertilizer that promotes strong plant growth organically.",
+  },
+  {
+    name: "Zoom",
+    image: "/products/Zoom.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Fast-acting neem-based organic cake to enhance soil nutrition.",
+  },
+  {
+    name: "Ajooba",
+    image: "/products/Ajooba.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Trusted organic neem fertilizer for eco-friendly agriculture.",
+  },
+  {
+    name: "Re-Life",
+    image: "/products/ReLife.png",
+    category: "organic",
+    price: "$18",
+    tags: ["neem", "organic", "cake"],
+    description: "Rejuvenating neem organic product to enrich soil health and vitality.",
+  },
+];
+
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       activeCategory === "all" || product.category === activeCategory;
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      (product.description || "")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -110,7 +166,7 @@ const ProductsPage = () => {
       <HeroSection
         title="Our Products"
         description="Discover our comprehensive range of premium fertilizers, chemicals, and agricultural solutions."
-        backgroundImage="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600"
+        backgroundImage="/hero4.png"
         height="md"
       />
 
@@ -176,10 +232,7 @@ const ProductsPage = () => {
                   key={product.name}
                   name={product.name}
                   description={product.description}
-                  price={product.price}
                   image={product.image}
-                  category={product.category}
-                  tags={product.tags}
                   index={index}
                 />
               ))}
@@ -194,10 +247,12 @@ const ProductsPage = () => {
               <div className="text-gray-400 text-6xl mb-4">📦</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
               <p className="text-gray-600 mb-4">Try adjusting your search or filter criteria</p>
-              <Button onClick={() => {
-                setSearchTerm("");
-                setActiveCategory("all");
-              }}>
+              <Button
+                onClick={() => {
+                  setSearchTerm("");
+                  setActiveCategory("all");
+                }}
+              >
                 Clear Filters
               </Button>
             </motion.div>
@@ -221,10 +276,18 @@ const ProductsPage = () => {
               Our agricultural experts are here to help you select the right products for your specific crop and soil conditions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100">
+              <Button
+                size="lg"
+                variant="secondary"
+                className="bg-white text-primary hover:bg-gray-100"
+              >
                 Get Expert Consultation
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-white text-black hover:bg-white hover:text-primary">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-white text-black hover:bg-white hover:text-primary"
+              >
                 Download Product Catalog
               </Button>
             </div>
