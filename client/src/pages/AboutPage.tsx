@@ -36,9 +36,9 @@ const AboutPage = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <HeroSect
+      <HeroSection
       
-      ion
+      
         title="About Jagat Fertilizers & Chemicals"
         description="For over 8+ years, we have been at the forefront of agricultural innovation, providing farmers with high-quality fertilizers, chemicals, and expert guidance to maximize crop yields and promote sustainable farming practices."
         backgroundImage="/hero2.png"
